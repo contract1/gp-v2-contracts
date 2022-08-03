@@ -1,3 +1,4 @@
+
 import { expect } from "chai";
 import { BigNumber, ContractFactory } from "ethers";
 import { ethers } from "hardhat";
@@ -15,8 +16,10 @@ describe("StorageAccessible", () => {
     StorageAccessibleWrapper = await ethers.getContractFactory(
       "StorageAccessibleWrapper",
     );
+    
     ExternalStorageReader = await ethers.getContractFactory(
       "ExternalStorageReader",
+      
     );
   });
 
@@ -32,6 +35,7 @@ describe("StorageAccessible", () => {
         reader.address,
         getFooCall,
       );
+      
       expect(decodeUint(result)).to.equal(42);
     });
 
@@ -45,10 +49,12 @@ describe("StorageAccessible", () => {
         "setAndGetFoo",
         [69],
       );
+      
       let result = await instance.callStatic.simulateDelegatecall(
         reader.address,
         replaceFooCall,
       );
+      
       expect(decodeUint(result)).to.equal(69);
 
       // Make sure foo is not actually changed
@@ -57,6 +63,7 @@ describe("StorageAccessible", () => {
         reader.address,
         getFooCall,
       );
+      
       expect(decodeUint(result)).to.equal(42);
     });
 
